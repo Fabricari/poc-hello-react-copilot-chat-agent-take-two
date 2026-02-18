@@ -23,6 +23,8 @@
   height: 100%;
   fill: var(--star-color);
   filter: drop-shadow(0 14px 20px rgb(0 0 0 / 25%));
+  transform-origin: 50% 50%;
+  animation: hero-star-spin 18s linear infinite;
 }
 
 .hero-title {
@@ -61,5 +63,15 @@
 
   to {
     transform: rotate(var(--wobble-max-deg));
+  }
+}
+
+@keyframes hero-star-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
