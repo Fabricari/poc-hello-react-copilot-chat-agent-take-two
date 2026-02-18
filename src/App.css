@@ -30,12 +30,22 @@
   margin: 0;
   color: var(--text-color);
   font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-  font-size: clamp(2rem, 9vmin, 4.8rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--title-font-size);
+  font-weight: 900;
   line-height: 1;
-  text-align: center;
+  text-align: left;
+  height: var(--title-font-size);
+  font-kerning: normal;
   text-shadow:
     0 2px 0 rgb(0 0 0 / 18%),
     0 6px 18px rgb(0 0 0 / 22%);
+}
+
+.hero-letter {
+  position: absolute;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  transform-origin: 50% 58%;
+  white-space: pre;
 }
