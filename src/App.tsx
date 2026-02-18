@@ -17,6 +17,7 @@ type LetterLayout = {
 
 const BASE_LETTER_ROTATION_DEG = 0;
 const RANDOM_ROTATION_RANGE_DEG = 20;
+const LETTER_SPACING_PX = 4;
 const TITLE_FONT_WEIGHT = 900;
 const TITLE_FONT_SIZE_PX = 72;
 const TITLE_FONT_FAMILY = "Impact, Haettenschweiler, 'Arial Black', sans-serif";
@@ -32,14 +33,16 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
   if (!context) {
     const fallback = text.split('').map((char, index) => ({
       char,
-      left: index * TITLE_FONT_SIZE_PX * 0.62,
+      left: index * (TITLE_FONT_SIZE_PX * 0.62 + LETTER_SPACING_PX),
       width: TITLE_FONT_SIZE_PX * 0.62,
       rotation: BASE_LETTER_ROTATION_DEG + randomInRange(-RANDOM_ROTATION_RANGE_DEG, RANDOM_ROTATION_RANGE_DEG)
     }));
 
     return {
       letters: fallback,
-      totalWidth: fallback.length * TITLE_FONT_SIZE_PX * 0.62
+      totalWidth:
+        fallback.length * TITLE_FONT_SIZE_PX * 0.62 +
+        Math.max(0, fallback.length - 1) * LETTER_SPACING_PX
     };
   }
 
@@ -54,7 +57,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
 
     return {
       char,
-      left,
+      left: left + index * LETTER_SPACING_PX,
       width,
       rotation: BASE_LETTER_ROTATION_DEG + randomInRange(-RANDOM_ROTATION_RANGE_DEG, RANDOM_ROTATION_RANGE_DEG)
     };
@@ -62,7 +65,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
 
   return {
     letters,
-    totalWidth: context.measureText(text).width
+    totalWidth: context.measureText(text).width + Math.max(0, text.length - 1) * LETTER_SPACING_PX
   };
 }
 
@@ -97,7 +100,7 @@ export function App() {
           role="img"
           aria-label="Star background"
         >
-          <polygon points="50,4 61,36 96,36 68,56 79,90 50,70 21,90 32,56 4,36 39,36" />
+          <polygon points="50,4 64,31 96,36 73,60 79,90 50,79 21,90 27,60 4,36 36,31" />
         </svg>
         <h1 className="hero-title" style={titleStyle}>
           {titleLayout.letters.map((letter, index) => {
