@@ -16,6 +16,18 @@
   aspect-ratio: 1;
   display: grid;
   place-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hero-star-wrap {
+  width: 100%;
+  height: 100%;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero--pressed .hero-star-wrap {
+  transform: scale(0.7);
 }
 
 .hero-star {
@@ -25,6 +37,10 @@
   filter: drop-shadow(0 14px 20px rgb(0 0 0 / 25%));
   transform-origin: 50% 50%;
   animation: hero-star-spin 18s linear infinite;
+}
+
+.hero--pressed .hero-star {
+  animation-play-state: paused;
 }
 
 .hero-title {
@@ -44,6 +60,7 @@
   text-shadow:
     0 2px 0 rgb(0 0 0 / 18%),
     0 6px 18px rgb(0 0 0 / 22%);
+  cursor: inherit;
 }
 
 .hero-letter {
@@ -54,6 +71,7 @@
   transform-origin: 50% 50%;
   white-space: pre;
   animation: hero-letter-wobble var(--wobble-duration) ease-in-out infinite alternate;
+  cursor: inherit;
 }
 
 @keyframes hero-letter-wobble {

@@ -1,6 +1,6 @@
 import './App.css';
 import type { CSSProperties } from 'react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 type HomeTheme = {
   backgroundColor: string;
@@ -72,6 +72,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
 
 export function App() {
   const greeting: string = 'HELLO WORLD';
+  const [isPressed, setIsPressed] = useState(false);
 
   const theme: HomeTheme = {
     backgroundColor: '#4f5678',
@@ -97,15 +98,23 @@ export function App() {
 
   return (
     <main className="home" style={styleVars}>
-      <section className="hero" aria-label="Hello world hero">
-        <svg
-          className="hero-star"
-          viewBox="0 0 100 100"
-          role="img"
-          aria-label="Star background"
-        >
-          <polygon points="50,4 64,31 96,36 73,60 79,90 50,79 21,90 27,60 4,36 36,31" />
-        </svg>
+      <section
+        className={`hero${isPressed ? ' hero--pressed' : ''}`}
+        aria-label="Hello world hero"
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        onMouseLeave={() => setIsPressed(false)}
+      >
+        <div className="hero-star-wrap" aria-hidden="true">
+          <svg
+            className="hero-star"
+            viewBox="0 0 100 100"
+            role="img"
+            aria-label="Star background"
+          >
+            <polygon points="50,4 64,31 96,36 73,60 79,90 50,79 21,90 27,60 4,36 36,31" />
+          </svg>
+        </div>
         <h1 className="hero-title" style={titleStyle}>
           {titleLayout.letters.map((letter, index) => {
             const letterStyle = {
