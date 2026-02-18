@@ -49,6 +49,17 @@
   top: 0;
   display: inline-block;
   text-align: center;
-  transform-origin: 50% 58%;
+  transform-origin: 50% 50%;
   white-space: pre;
+  animation: hero-letter-wobble var(--wobble-duration) ease-in-out infinite alternate;
+}
+
+@keyframes hero-letter-wobble {
+  from {
+    transform: rotate(var(--wobble-min-deg));
+  }
+
+  to {
+    transform: rotate(var(--wobble-max-deg));
+  }
 }

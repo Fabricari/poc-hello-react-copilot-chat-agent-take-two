@@ -12,12 +12,13 @@ type LetterLayout = {
   char: string;
   left: number;
   width: number;
-  rotation: number;
+  phaseOffsetSeconds: number;
 };
 
 const BASE_LETTER_ROTATION_DEG = 0;
 const RANDOM_ROTATION_RANGE_DEG = 20;
 const LETTER_SPACING_PX = 4;
+const WOBBLE_CYCLE_SECONDS = 3.2;
 const TITLE_FONT_WEIGHT = 900;
 const TITLE_FONT_SIZE_PX = 72;
 const TITLE_FONT_FAMILY = "Impact, Haettenschweiler, 'Arial Black', sans-serif";
@@ -35,7 +36,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
       char,
       left: index * (TITLE_FONT_SIZE_PX * 0.62 + LETTER_SPACING_PX),
       width: TITLE_FONT_SIZE_PX * 0.62,
-      rotation: BASE_LETTER_ROTATION_DEG + randomInRange(-RANDOM_ROTATION_RANGE_DEG, RANDOM_ROTATION_RANGE_DEG)
+      phaseOffsetSeconds: randomInRange(0, WOBBLE_CYCLE_SECONDS)
     }));
 
     return {
@@ -59,7 +60,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
       char,
       left: left + index * LETTER_SPACING_PX,
       width,
-      rotation: BASE_LETTER_ROTATION_DEG + randomInRange(-RANDOM_ROTATION_RANGE_DEG, RANDOM_ROTATION_RANGE_DEG)
+      phaseOffsetSeconds: randomInRange(0, WOBBLE_CYCLE_SECONDS)
     };
   });
 
@@ -82,7 +83,10 @@ export function App() {
     '--background-color': theme.backgroundColor,
     '--star-color': theme.starColor,
     '--text-color': theme.textColor,
-    '--title-font-size': `${TITLE_FONT_SIZE_PX}px`
+    '--title-font-size': `${TITLE_FONT_SIZE_PX}px`,
+    '--wobble-min-deg': `${BASE_LETTER_ROTATION_DEG - RANDOM_ROTATION_RANGE_DEG}deg`,
+    '--wobble-max-deg': `${BASE_LETTER_ROTATION_DEG + RANDOM_ROTATION_RANGE_DEG}deg`,
+    '--wobble-duration': `${WOBBLE_CYCLE_SECONDS}s`
   } as CSSProperties;
 
   const titleLayout = useMemo(() => getLetterLayout(greeting), [greeting]);
@@ -107,7 +111,7 @@ export function App() {
             const letterStyle = {
               left: `${letter.left}px`,
               width: `${Math.max(letter.width, 1)}px`,
-              transform: `rotate(${letter.rotation}deg)`
+              animationDelay: `-${letter.phaseOffsetSeconds}s`
             } as CSSProperties;
 
             return (
