@@ -93,3 +93,25 @@
     transform: rotate(360deg);
   }
 }
+
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 45%);
+  z-index: 20;
+}
+
+.video-modal {
+  border: 10px solid #fff;
+  line-height: 0;
+  background: #000;
+}
+
+.video-modal iframe {
+  display: block;
+  max-width: min(88vw, 560px);
+  width: min(88vw, 560px);
+  height: min(49.5vw, 315px);
+}

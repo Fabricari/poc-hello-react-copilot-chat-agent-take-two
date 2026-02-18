@@ -73,6 +73,7 @@ function getLetterLayout(text: string): { letters: LetterLayout[]; totalWidth: n
 export function App() {
   const greeting: string = 'HELLO WORLD';
   const [isPressed, setIsPressed] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const theme: HomeTheme = {
     backgroundColor: '#4f5678',
@@ -96,13 +97,21 @@ export function App() {
     width: `${titleLayout.totalWidth}px`
   } as CSSProperties;
 
+  function handleMouseUp() {
+    if (isPressed) {
+      setIsModalOpen(true);
+    }
+
+    setIsPressed(false);
+  }
+
   return (
     <main className="home" style={styleVars}>
       <section
         className={`hero${isPressed ? ' hero--pressed' : ''}`}
         aria-label="Hello world hero"
         onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
+        onMouseUp={handleMouseUp}
         onMouseLeave={() => setIsPressed(false)}
       >
         <div className="hero-star-wrap" aria-hidden="true">
@@ -131,6 +140,23 @@ export function App() {
           })}
         </h1>
       </section>
+
+      {isModalOpen ? (
+        <div className="video-modal-overlay" role="dialog" aria-modal="true" aria-label="YouTube video">
+          <div className="video-modal">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/mHONNcZbwDY?si=JHS5_THr9NwfH5ac"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
